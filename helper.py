@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import os
+import re
 from pathlib import Path
 from urllib.parse import urlparse
 from selenium.webdriver.chrome.service import Service
@@ -11,6 +12,12 @@ chrome_driver_path = Path(f'{os.getcwd()}\driver\chromedriver.exe')
 chrome_options = Options()
 chrome_options.add_argument("--headless=new")
 chrome_options.add_argument("--disable-gpu")
+chrome_options.add_experimental_option(
+        "prefs", {
+            # block image loading
+            "profile.managed_default_content_settings.images": 2,
+        }
+    )
 # chrome_options.add_argument("--remote-debugging-port=9222")
 service = Service(executable_path=chrome_driver_path)
 
@@ -40,9 +47,11 @@ def scrape_text_from_website(url):
     driver.get(url)
     # Extract text from the website
     text = driver.find_element(By.TAG_NAME, 'body').text
+    # filter only kurdish text
+    kurdish_text = re.sub(r'[a-zA-Z?]', '', text).strip()
     # Close the browser window
     driver.quit()
-    return text
+    return kurdish_text
 
 def crawl_website(start_url, domain, data_path, max_depth=3):
     visited_urls = set()

@@ -8,6 +8,11 @@ parser.add_argument('--domain', required=True, help='Domain to filter crawling')
 args = parser.parse_args()
 
 max_depth = 30
-data_path = Path(f'{os.getcwd()}\\research\data')
+data_path = Path(f'{os.getcwd()}\\data')
         
-crawl_website(args.url, args.domain, data_path, max_depth) 
+
+def main():
+    crawl_website(args.url, args.domain, data_path, max_depth) 
+
+if __name__ == "__main__":
+    main()

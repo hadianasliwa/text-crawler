@@ -8,7 +8,7 @@ parser.add_argument('--domain', required=True, help='Domain to filter crawling')
 args = parser.parse_args()
 
 max_depth = 30
-data_path = Path(f'{os.getcwd()}\\data')
+data_path = Path(f'{os.getcwd()}/data')
         
 
 def main():

@@ -7,7 +7,8 @@ from urllib.parse import urlparse
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 
-chrome_driver_path = Path(f'{os.getcwd()}\driver\chromedriver.exe')
+
+chrome_driver_path = Path(f'{os.getcwd()}/driver/chromedriver.exe')
 
 chrome_options = Options()
 chrome_options.add_argument("--headless=new")
@@ -64,7 +65,7 @@ def crawl_website(start_url, domain, data_path, max_depth=3):
 
         visited_urls.add(url)
         links = get_all_links(url)
-        path_to_links = Path(f'{data_path}\links_scraped\{urlparse(url).netloc}.txt')
+        path_to_links = Path(f'{data_path}/links_scraped/{urlparse(url).netloc}.txt')
         write_text_to_file(url, path_to_links)
         for link in links:
             recursive_crawl(link, depth + 1)
@@ -74,7 +75,7 @@ def crawl_website(start_url, domain, data_path, max_depth=3):
             text = scrape_text_from_website(url)
             print(f'\n\nText scraped:\n{text}')
             # save data to the provided path
-            path_to_data = Path(f'{data_path}\data_scaped\{urlparse(url).netloc}.txt')
+            path_to_data = Path(f'{data_path}/data_scaped/{urlparse(url).netloc}.txt')
            
             write_text_to_file(text, path_to_data)
             
